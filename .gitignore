@@ -26,3 +26,18 @@
 *.exe
 *.out
 *.app
+
+# Project others
+*.log
+*.tlog
+*.user
+*.sdf
+*.opensdf
+*.suo
+*.idb
+*.pdb
+
+# directories
+/ipch/*
+/Debug/*
+/bin/*
