@@ -28,19 +28,22 @@ class UdpReceive
 };
 
 
-class EasyUdp
+class EasyUdp:
+    public std::enable_shared_from_this<EasyUdp>
 {
 public:
-    EasyUdp();
+    static std::shared_ptr<EasyUdp> GetShare();
     ~EasyUdp();
-
-    bool Init();
     bool Send(const std::vector<uint8>& data, const SendCallback& callback,
                   uint32 mstimeout);
 
     bool BindSend(UdpSend udpsend, const base::Closure& closure);
 
 private:
+    EasyUdp();
+
+    static std::shared_ptr<EasyUdp>* easyUdp;
+    bool Init();
 
     void DoSend(const std::vector<uint8>& data, const SendCallback& callback,
         uint32 mstimeout);

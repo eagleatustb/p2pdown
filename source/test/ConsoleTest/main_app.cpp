@@ -48,6 +48,9 @@ void MainApp::Test()
             return;
     }
     
+    downloadTaskScheduler_->StartTask(handle);
+
+
     return;
 }
 

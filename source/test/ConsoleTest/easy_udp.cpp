@@ -3,6 +3,18 @@
 #include "third_party/chromium/base/bind.h"
 #include "test/ConsoleTest/download_task_scheduler.h"
 
+std::shared_ptr<EasyUdp>* EasyUdp::easyUdp = nullptr;
+
+std::shared_ptr<EasyUdp> EasyUdp::GetShare()
+{
+    if (!easyUdp)
+    {
+        easyUdp->reset(new EasyUdp);
+    }
+    return *easyUdp;
+}
+
+
 EasyUdp::EasyUdp()
 {
 

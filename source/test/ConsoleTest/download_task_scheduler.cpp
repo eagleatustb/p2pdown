@@ -93,6 +93,18 @@ bool DownloadTaskScheduler::StartTask(const DownloadTaskHandle& handle)
 
 void DownloadTaskScheduler::DoStartTask(const DownloadTaskHandle& handle)
 {
+    auto findresult = taskMap_.find(handle);
+    bool result = false;
+    if (findresult != taskMap_.end())
+    {
+        const std::shared_ptr<DownloadTask>& ref = findresult->second;
+        result = ref->Run();
+    }
+    else
+    {
+        result = false;
+    }
+
     // 通知结果
     // outerRunner_->PostNonNestableTask()
 }
