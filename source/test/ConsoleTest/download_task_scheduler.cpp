@@ -77,7 +77,6 @@ void DownloadTaskScheduler::DoRemove(const DownloadTaskHandle& handle)
 {
     auto sizetype = taskMap_.erase(handle);
 
-    
     // 通知结果
     // outerRunner_->PostNonNestableTask()
     return ;
@@ -119,7 +118,6 @@ bool DownloadTaskScheduler::StopTask(const DownloadTaskHandle& handle)
 
 void DownloadTaskScheduler::DoStopTask(const DownloadTaskHandle& handle)
 {
-
     // 通知结果
     // outerRunner_->PostNonNestableTask()
     return ;

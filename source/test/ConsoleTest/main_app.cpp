@@ -1,5 +1,6 @@
 #include "main_app.h"
 
+#include "third_party/chromium/base/bind.h"
 #include "base/thread_pool.h"
 
 #include "download_task.h"
@@ -27,34 +28,50 @@ bool MainApp::Init(base::MessageLoop* messageloop)
     return true;
 }
 
-bool MainApp::Start()
-{
-    downloadTaskScheduler_->Start();
-    return false;
-}
-
 void MainApp::Run()
 {
     uiMessageLoop_->Run();
-}
-
-void MainApp::Test()
-{
-    DownloadTaskHandle handle;
-    DownloadTaskParam downloadtaskparam;
-    if (downloadTaskScheduler_->AddTask(downloadtaskparam, &handle))
-    {
-        if (!handle.IsVaild())
-            return;
-    }
-    
-    downloadTaskScheduler_->StartTask(handle);
-
-
-    return;
 }
 
 bool MainApp::Stop()
 {
     return false;
 }
+
+
+bool MainApp::Start()
+{
+    uiMessageLoop_->PostTask(FROM_HERE,
+                             base::Bind(&MainApp::DoStart,
+                             base::Unretained(this)));
+    return true;
+}
+
+void MainApp::DoStart()
+{
+    downloadTaskScheduler_->Start();
+}
+
+bool MainApp::Test()
+{
+    uiMessageLoop_->PostTask(FROM_HERE,
+                             base::Bind(&MainApp::DoTest,
+                             base::Unretained(this)));
+    return true;
+}
+
+void MainApp::DoTest()
+{
+    DownloadTaskHandle handle;
+    DownloadTaskParam downloadtaskparam;
+    if (!downloadTaskScheduler_->AddTask(downloadtaskparam, &handle))
+    {
+        return;
+    }
+    if (!handle.IsVaild())
+        return;
+    downloadTaskScheduler_->StartTask(handle);
+
+    return;
+}
+

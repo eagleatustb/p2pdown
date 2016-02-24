@@ -11,12 +11,14 @@ public:
     ~MainApp();
     bool Init(base::MessageLoop* messageloop);
     bool Start();
+    bool Test();
     void Run();
     bool Stop();
 
-    void Test();
-
 private:
+    void DoStart();
+    void DoTest();
+
     scoped_refptr<DownloadTaskScheduler> downloadTaskScheduler_;
     base::MessageLoop* uiMessageLoop_;
     scoped_refptr<base::SequencedTaskRunner> runner_;

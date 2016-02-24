@@ -54,6 +54,8 @@ int _tmain(int argc, _TCHAR* argv[])
         // 启动业务模块
         mainApp.Start();
 
+        mainApp.Run();
+
         mainApp.Test();
 
         //停止业务模块
