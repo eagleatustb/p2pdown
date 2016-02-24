@@ -100,14 +100,13 @@ void DownloadTask::DoSendHashProtocol()
     SendCallback callback = std::bind(&DownloadTask::SendHashProtocalCallback,
          std::weak_ptr<DownloadTask>(shared_from_this()));
 
-    EasyUdp easyudp;
     // 异步发送数据
-    easyudp.Send(data, callback, 0);
+    EasyUdp::GetShare()->Send(data, callback, 0);
 
     UdpSend udpsend;
     auto cb = base::Bind(&DownloadTask::SendHashProtocalCallback,
         std::weak_ptr<DownloadTask>(shared_from_this()));
-    easyudp.BindSend(udpsend, cb);
+    EasyUdp::GetShare()->BindSend(udpsend, cb);
 }
 
 void DownloadTask::SendHashProtocalCallback(std::weak_ptr<DownloadTask> wptr)
